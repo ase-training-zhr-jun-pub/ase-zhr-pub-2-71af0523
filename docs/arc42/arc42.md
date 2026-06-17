@@ -62,7 +62,9 @@ GL --> Calvin : Sieht Reports
 
 ### Ebene 1: Whitebox Gesamtsystem
 
-Das Calvin-System besteht aus einer Single Page Application (SPA) und einem separaten Booking Service. Diese Architektur wurde für die Prototyping-Phase optimiert und ermöglicht eine klare Trennung zwischen Benutzeroberfläche und Geschäftslogik.
+Das Calvin-System besteht aus einer Single Page Application (SPA) und einem separaten Booking Service. Die SPA enthält die Stammdaten (Standorte, Räume, Ausstattungen) als Mock-Daten. Der Booking Service arbeitet ausschließlich mit den IDs aus diesen Mock-Daten.
+
+Für den Prototypen wird Basic-Auth ohne Passwörter eingesetzt, um schnell mit verschiedenen Nutzern testen zu können. Die Okta-Integration wird nachgeliefert, wenn das System in Produktion geht (siehe [Technische Schulden](../architektur/technische-schulden.md)).
 
 ```plantuml
 @startuml
@@ -76,11 +78,16 @@ actor "Geschäftsleitung" as gl
 package "Calvin System" {
     component "SPA\n(Single Page Application)" as spa
     component "Booking Service" as booking
+
+    note right of spa
+        Enthält Stammdaten als Mock-Daten:
+        Standorte, Räume, Ausstattungen
+    end note
 }
 
 consultant --> spa : Bucht Räume &\nArbeitsplätze
 gl --> spa : Sieht Reports
-spa --> booking : REST API\n(JSON)
+spa --> booking : REST API\n(JSON)\nBasic-Auth
 
 @enduml
 ```
@@ -89,22 +96,26 @@ spa --> booking : REST API\n(JSON)
 
 | Baustein | Verantwortlichkeit | Quellcode |
 |----------|-------------------|-----------|
-| **SPA** | Benutzeroberfläche für Buchungen, Kalenderansichten und Reports | `frontend/` |
-| **Booking Service** | Buchungslogik, Validierung, Konfliktprüfung, Auswertungsdaten | `backend/` |
+| **SPA** | Benutzeroberfläche für Buchungen, Kalenderansichten und Reports; enthält Stammdaten (Standorte, Räume, Ausstattungen) als Mock-Daten | `frontend/` |
+| **Booking Service** | Buchungslogik, Validierung, Konfliktprüfung; arbeitet nur mit IDs aus den Mock-Daten der SPA | `backend/` |
 
 ### Schnittstelle: SPA → Booking Service
 
-Die SPA kommuniziert mit dem Booking Service über eine REST API (JSON über HTTPS). Die API-Spezifikation wird als OpenAPI-Dokument im Backend gepflegt.
+Die SPA kommuniziert mit dem Booking Service über eine REST API (JSON über HTTPS) mit Basic-Auth. Die API-Spezifikation wird als OpenAPI-Dokument im Backend gepflegt.
 
 ---
 
 ## Architekturentscheidungen
 
-Architekturentscheidungen sind als Architecture Decision Records (ADR) dokumentiert. Die ADRs findest du unter `docs/arc42/adrs/`.
+Architekturentscheidungen sind als Architecture Decision Records (ADR) dokumentiert. Die ADRs findest du unter `docs/arc42/adrs/` und `docs/architektur/adrs/`.
+
+Bewusst eingegangene technische Schulden sind in [docs/architektur/technische-schulden.md](../architektur/technische-schulden.md) dokumentiert.
 
 ---
 
 ## Qualitätsanforderungen
+
+Die vollständigen Qualitätsszenarien sind in [docs/architektur/qualitätsanforderungen.md](../architektur/qualitätsanforderungen.md) dokumentiert.
 
 Diese Qualitätsszenarien definieren die wesentlichen Qualitätsmerkmale des Calvin-Systems.
 

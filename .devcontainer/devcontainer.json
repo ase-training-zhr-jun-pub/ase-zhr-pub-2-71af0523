@@ -15,7 +15,12 @@
 				"esbenp.prettier-vscode",
 				"DavidAnson.vscode-markdownlint",
 				"bierner.markdown-mermaid",
-				"pomdtr.markdown-kroki"
+				"pomdtr.markdown-kroki",
+				"vscjava.vscode-java-pack",
+				"vmware.vscode-spring-boot",
+				"vscjava.vscode-spring-initializr",
+				"vscjava.vscode-spring-boot-dashboard",
+				"fwcd.kotlin"
 			]
 		}
 	},
