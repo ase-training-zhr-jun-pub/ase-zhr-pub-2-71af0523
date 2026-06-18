@@ -13,12 +13,14 @@ export function RaumCard({
   datum,
   von,
   bis,
+  ausgewaehlt,
   onAuswaehlen,
 }: {
   raum: Raum
   datum: string
   von: string
   bis: string
+  ausgewaehlt?: boolean
   onAuswaehlen: (raum: Raum) => void
 }) {
   const { istFavorit, toggleFavorit } = useApp()
@@ -27,7 +29,7 @@ export function RaumCard({
   const alt = !frei ? alternativeSlots(raum, datum, von, bis, 1)[0] : undefined
 
   return (
-    <Card className="flex flex-row items-stretch gap-0 overflow-hidden p-0">
+    <Card className={cn("flex flex-row items-stretch gap-0 overflow-hidden p-0", ausgewaehlt && "ring-2 ring-primary")}>
       {/* Farbakzent / Mini-Bild */}
       <div
         className="hidden w-2 shrink-0 sm:block"
