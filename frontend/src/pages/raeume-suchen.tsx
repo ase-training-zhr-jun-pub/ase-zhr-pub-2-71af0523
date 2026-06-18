@@ -7,6 +7,7 @@ import { EtagenPlan } from "@/components/etagen-plan"
 import { ZEITEN } from "@/components/zeit-select"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
@@ -213,6 +214,35 @@ export function RaeumeSuchenPage() {
 
         {/* Ergebnisse */}
         <section className="space-y-3">
+          {(minKapazitaet > 1 || ausstattungFilter.length > 0) && (
+            <div className="flex flex-wrap gap-2">
+              {minKapazitaet > 1 && (
+                <Badge variant="secondary" className="flex items-center gap-1 pr-1">
+                  ≥ {minKapazitaet} Pers.
+                  <button
+                    onClick={() => setMinKapazitaet(1)}
+                    className="ml-0.5 rounded-sm hover:bg-muted-foreground/20"
+                    aria-label="Kapazitätsfilter entfernen"
+                  >
+                    <X className="size-3" />
+                  </button>
+                </Badge>
+              )}
+              {ausstattungFilter.map((a) => (
+                <Badge key={a} variant="secondary" className="flex items-center gap-1 pr-1">
+                  {a}
+                  <button
+                    onClick={() => toggleAusstattung(a)}
+                    className="ml-0.5 rounded-sm hover:bg-muted-foreground/20"
+                    aria-label={`Filter "${a}" entfernen`}
+                  >
+                    <X className="size-3" />
+                  </button>
+                </Badge>
+              ))}
+            </div>
+          )}
+
           <div className="text-sm text-muted-foreground">
             <span className="font-medium text-foreground">{raeume.length}</span> Räume ·{" "}
             <span className="font-medium text-emerald-600 dark:text-emerald-400">{anzahlFrei}</span>{" "}
