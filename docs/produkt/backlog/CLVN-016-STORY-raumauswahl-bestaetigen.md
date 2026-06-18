@@ -30,6 +30,11 @@ Diese User Story ist zentral für das Epic "Raum buchen", da sie den Übergang v
 
 [INNOQ-Mitarbeiter](/docs/produkt/personas/innoq-mitarbeiter.md)
 
+## Subtasks
+
+- [CLVN-028 – RaumCard: visuelle Auswahlmarkierung](CLVN-028-TASK-raumcard-auswahlmarkierung.md)
+- [CLVN-029 – BuchungDialog: zweistufiger Buchungsflow](CLVN-029-TASK-buchungdialog-zweistufiger-flow.md)
+
 ## Zugehöriges Epic
 
 [CLVN-015 - Raum buchen](/docs/produkt/backlog/CLVN-015-EPIC-raum-buchen.md)

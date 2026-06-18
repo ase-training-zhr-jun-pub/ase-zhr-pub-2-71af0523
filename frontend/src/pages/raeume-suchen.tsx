@@ -237,6 +237,7 @@ export function RaeumeSuchenPage() {
                   datum={datum}
                   von={von}
                   bis={bis}
+                  ausgewaehlt={gewaehlterRaum?.id === r.id}
                   onAuswaehlen={oeffneDialog}
                 />
               ))}
