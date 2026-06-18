@@ -7,6 +7,7 @@ import { RaeumeSuchenPage } from "@/pages/raeume-suchen"
 import { MeineBuchungenPage } from "@/pages/meine-buchungen"
 import { KollegenHeutePage } from "@/pages/kollegen-heute"
 import { FavoritenPage } from "@/pages/favoriten"
+import { BuchungsbestaetigungPage } from "@/pages/buchungsbestaetigung"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/raeume" element={<RaeumeSuchenPage />} />
             <Route path="/buchungen" element={<MeineBuchungenPage />} />
+            <Route path="/buchungen/bestaetigung" element={<BuchungsbestaetigungPage />} />
             <Route path="/kollegen" element={<KollegenHeutePage />} />
             <Route path="/favoriten" element={<FavoritenPage />} />
           </Route>

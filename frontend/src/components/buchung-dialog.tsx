@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { Users, MapPin, CheckCircle2, AlertTriangle, Clock } from "lucide-react"
 import {
@@ -40,7 +41,9 @@ export function BuchungDialog({
   onOpenChange: (open: boolean) => void
 }) {
   const { addBuchung } = useApp()
+  const navigate = useNavigate()
   const [titel, setTitel] = useState("")
+  const [titelTouched, setTitelTouched] = useState(false)
   const [von, setVon] = useState(suche.von)
   const [bis, setBis] = useState(suche.bis)
   const [notiz, setNotiz] = useState("")
@@ -52,6 +55,7 @@ export function BuchungDialog({
     setVon(suche.von)
     setBis(suche.bis)
     setTitel("")
+    setTitelTouched(false)
     setNotiz("")
   }
 
@@ -63,13 +67,15 @@ export function BuchungDialog({
     ? alternativeSlots(raum, suche.datum, von, bis)
     : []
 
+  const titelUngueltig = !titel.trim()
+
   function absenden() {
-    if (!raum || !verfuegbar) return
+    if (!raum || !verfuegbar || titelUngueltig) return
     const buchung: Buchung = {
       id: `b-${Math.round(performance.now())}`,
       raumId: raum.id,
       standortId: raum.standortId,
-      titel: titel.trim() || "Ohne Titel",
+      titel: titel.trim(),
       datum: suche.datum,
       von,
       bis,
@@ -78,11 +84,12 @@ export function BuchungDialog({
       status: "bestätigt",
     }
     addBuchung(buchung)
-    onOpenChange(false)
     toast.success("Raum verbindlich gebucht", {
       description: `${raum.name} · ${formatDatum(suche.datum)} · ${von}–${bis}`,
       icon: <CheckCircle2 className="size-4" />,
     })
+    navigate("/buchungen/bestaetigung", { state: { buchung, raum } })
+    onOpenChange(false)
   }
 
   return (
@@ -125,13 +132,26 @@ export function BuchungDialog({
         {/* Buchungsformular */}
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <Label htmlFor="titel">Meetingtitel</Label>
+            <Label htmlFor="titel">
+              Meetingtitel <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="titel"
               placeholder="z.B. Sprint Review"
               value={titel}
+              maxLength={100}
               onChange={(e) => setTitel(e.target.value)}
+              onBlur={() => setTitelTouched(true)}
+              className={cn(titelTouched && titelUngueltig && "border-destructive focus-visible:ring-destructive")}
             />
+            <div className="flex items-center justify-between">
+              {titelTouched && titelUngueltig ? (
+                <p className="text-xs text-destructive">Meetingtitel ist ein Pflichtfeld.</p>
+              ) : (
+                <span />
+              )}
+              <p className="ml-auto text-xs text-muted-foreground">{titel.length}/100</p>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -211,9 +231,11 @@ export function BuchungDialog({
               id="notiz"
               placeholder="z.B. Beamer für Demo vorbereiten"
               value={notiz}
+              maxLength={500}
               onChange={(e) => setNotiz(e.target.value)}
               rows={2}
             />
+            <p className="text-right text-xs text-muted-foreground">{notiz.length}/500</p>
           </div>
         </div>
 
@@ -221,7 +243,7 @@ export function BuchungDialog({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Abbrechen
           </Button>
-          <Button disabled={!verfuegbar} onClick={absenden}>
+          <Button disabled={!verfuegbar || titelUngueltig} onClick={absenden}>
             Verbindlich buchen
           </Button>
         </DialogFooter>
