@@ -66,3 +66,7 @@ storybook-static/
 /playwright/.cache/
 /cypress/screenshots/
 /cypress/videos/
+
+# Claude / MCP local config
+**/.claude/settings.local.json
+**/.mcp.json
