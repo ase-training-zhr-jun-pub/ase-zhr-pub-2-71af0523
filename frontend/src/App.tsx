@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { DashboardPage } from "@/pages/dashboard"
 import { RaeumeSuchenPage } from "@/pages/raeume-suchen"
 import { MeineBuchungenPage } from "@/pages/meine-buchungen"
+import { BuchungsdetailPage } from "@/pages/buchungsdetail"
 import { KollegenHeutePage } from "@/pages/kollegen-heute"
 import { FavoritenPage } from "@/pages/favoriten"
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/raeume" element={<RaeumeSuchenPage />} />
             <Route path="/buchungen" element={<MeineBuchungenPage />} />
+            <Route path="/buchungen/:id" element={<BuchungsdetailPage />} />
             <Route path="/kollegen" element={<KollegenHeutePage />} />
             <Route path="/favoriten" element={<FavoritenPage />} />
           </Route>
