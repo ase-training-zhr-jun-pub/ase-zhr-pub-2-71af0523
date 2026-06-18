@@ -15,6 +15,8 @@
 - [CLVN-012 Alternative Zeitfenster anzeigen](CLVN-012-STORY-alternative-zeitfenster-anzeigen.md)
 - [CLVN-013 Ausstattung abgleichen](CLVN-013-STORY-ausstattung-abgleichen.md)
 - [CLVN-016 Raumauswahl bestätigen](CLVN-016-STORY-raumauswahl-bestaetigen.md)
+  - [CLVN-028 RaumCard – visuelle Auswahlmarkierung](CLVN-028-TASK-raumcard-auswahlmarkierung.md)
+  - [CLVN-029 BuchungDialog – zweistufiger Buchungsflow](CLVN-029-TASK-buchungdialog-zweistufiger-flow.md)
 - [CLVN-017 Buchungsnotiz hinzufügen](CLVN-017-STORY-buchungsnotiz-hinzufuegen.md)
 - [CLVN-018 Meetingtitel eingeben](CLVN-018-STORY-meetingtitel-eingeben.md)
 - [CLVN-024 Buchungsdetails ansehen](CLVN-024-STORY-buchungsdetails-ansehen.md)
