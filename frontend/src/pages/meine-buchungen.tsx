@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import {
   CalendarDays,
@@ -13,7 +14,6 @@ import {
 } from "lucide-react"
 import { PageHeader } from "@/components/page-header"
 import { LinkButton } from "@/components/ui/link-button"
-import { BelegungTimeline } from "@/components/belegung-timeline"
 import { ZEITEN } from "@/components/zeit-select"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -105,8 +105,8 @@ function LeerHinweis() {
 
 function BuchungZeile({ buchung, aktiv = false }: { buchung: Buchung; aktiv?: boolean }) {
   const { stornieren } = useApp()
+  const navigate = useNavigate()
   const raum = raumById(buchung.raumId)
-  const [detailOffen, setDetailOffen] = useState(false)
   const [aendernOffen, setAendernOffen] = useState(false)
   const [stornoOffen, setStornoOffen] = useState(false)
 
@@ -120,7 +120,10 @@ function BuchungZeile({ buchung, aktiv = false }: { buchung: Buchung; aktiv?: bo
 
   return (
     <>
-      <Card className="p-4">
+      <Card
+        className="cursor-pointer p-4 transition-shadow hover:shadow-md"
+        onClick={() => navigate(`/buchungen/${buchung.id}`)}
+      >
         <div className="flex items-start gap-4">
           <div className="flex h-14 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: raum?.farbe }} />
           <div className="min-w-0 flex-1">
@@ -155,18 +158,46 @@ function BuchungZeile({ buchung, aktiv = false }: { buchung: Buchung; aktiv?: bo
         </div>
 
         <div className="mt-3 flex flex-wrap justify-end gap-2">
-          <Button variant="ghost" size="sm" onClick={() => setDetailOffen(true)}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation()
+              navigate(`/buchungen/${buchung.id}`)
+            }}
+          >
             <Info className="size-4" /> Details
           </Button>
-          <Button variant="ghost" size="sm" onClick={teilen}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation()
+              teilen()
+            }}
+          >
             <Share2 className="size-4" /> Teilen
           </Button>
           {aktiv && (
             <>
-              <Button variant="ghost" size="sm" onClick={() => setAendernOffen(true)}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setAendernOffen(true)
+                }}
+              >
                 <Pencil className="size-4" /> Ändern
               </Button>
-              <Button variant="destructive" size="sm" onClick={() => setStornoOffen(true)}>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setStornoOffen(true)
+                }}
+              >
                 <Trash2 className="size-4" /> Stornieren
               </Button>
             </>
@@ -174,7 +205,6 @@ function BuchungZeile({ buchung, aktiv = false }: { buchung: Buchung; aktiv?: bo
         </div>
       </Card>
 
-      <DetailDialog buchung={buchung} open={detailOffen} onOpenChange={setDetailOffen} />
       <AendernDialog buchung={buchung} open={aendernOffen} onOpenChange={setAendernOffen} />
 
       {/* Stornieren bestätigen */}
@@ -205,58 +235,6 @@ function BuchungZeile({ buchung, aktiv = false }: { buchung: Buchung; aktiv?: bo
         </DialogContent>
       </Dialog>
     </>
-  )
-}
-
-function DetailDialog({
-  buchung,
-  open,
-  onOpenChange,
-}: {
-  buchung: Buchung
-  open: boolean
-  onOpenChange: (o: boolean) => void
-}) {
-  const raum = raumById(buchung.raumId)
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>{buchung.titel}</DialogTitle>
-          <DialogDescription>
-            {raum?.name} · {standortName(buchung.standortId)} · {raum?.etage}. OG, Raum{" "}
-            {raum?.raumnummer}
-          </DialogDescription>
-        </DialogHeader>
-        <dl className="grid grid-cols-2 gap-3 text-sm">
-          <Feld label="Datum" wert={formatDatum(buchung.datum)} />
-          <Feld label="Zeit" wert={`${buchung.von}–${buchung.bis} (${dauerText(buchung.von, buchung.bis)})`} />
-          <Feld label="Teilnehmer" wert={`${buchung.teilnehmer} Personen`} />
-          <Feld label="Status" wert={buchung.status} />
-          {buchung.notiz && <Feld label="Notiz" wert={buchung.notiz} className="col-span-2" />}
-        </dl>
-        {raum && (
-          <div>
-            <div className="mb-1.5 text-sm font-medium">Tagesbelegung</div>
-            <BelegungTimeline
-              raum={raum}
-              datum={buchung.datum}
-              wunschVon={buchung.von}
-              wunschBis={buchung.bis}
-            />
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-function Feld({ label, wert, className }: { label: string; wert: string; className?: string }) {
-  return (
-    <div className={className}>
-      <dt className="text-xs text-muted-foreground">{label}</dt>
-      <dd className="font-medium capitalize">{wert}</dd>
-    </div>
   )
 }
 
