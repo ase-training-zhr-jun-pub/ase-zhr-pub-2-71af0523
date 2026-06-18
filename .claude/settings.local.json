@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x .agents/skills/story/scripts/find-stories-without-ticket)",
+      "Bash(ln -s ../../.agents/skills/story .claude/skills/story)",
+      "Bash(./.claude/skills/story/scripts/find-stories-without-ticket CLVN-001)",
+      "Bash(./.claude/skills/story/scripts/find-stories-without-ticket docs/produkt/backlog/CLVN-001-EPIC-raeume-finden.md)",
+      "Bash(sed -n '1,60p' src/index.css)",
+      "Bash(ls node_modules)",
+      "Bash(npm install *)",
+      "Bash(npx --yes shadcn@latest add badge input label textarea select slider checkbox switch tabs dialog separator avatar sonner --yes)",
+      "Bash(node -e \"const p=require\\('./package.json'\\);console.log\\(Object.keys\\(p.dependencies\\).filter\\(d=>d.includes\\('radix'\\)||d.includes\\('sonner'\\)||d.includes\\('base-ui'\\)||d.includes\\('vaul'\\)\\).join\\('\\\\n'\\)\\)\")",
+      "Bash(npx --yes shadcn@latest add dialog dropdown-menu tooltip popover --yes)",
+      "Bash(npx --yes shadcn@latest add dialog)",
+      "Bash(npx tsc *)",
+      "Bash(curl -s http://localhost:5173/)",
+      "Bash(npm i *)",
+      "Bash(npx playwright *)",
+      "Bash(node scripts/shot.mjs)",
+      "Bash(node scripts/shot.mjs /)",
+      "Bash(npm run *)",
+      "Bash(fuser 5174/tcp)",
+      "Bash(ps *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/t/03d8e8236d6c7a37/s/71af052389b18d0d/proxy/5174/)",
+      "Bash(gradle wrapper *)",
+      "Bash(./gradlew build *)",
+      "Read(//usr/local/**)",
+      "Read(//home/coder/.sdkman/candidates/**)",
+      "Bash(sudo apt-get update -qq)",
+      "Bash(sudo apt-cache search openjdk)",
+      "Bash(./gradlew bootRun)",
+      "Bash(echo \"Backend PID: $!\")"
+    ]
+  }
+}

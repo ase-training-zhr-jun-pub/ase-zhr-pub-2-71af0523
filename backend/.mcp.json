@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest",
+        "--no-sandbox",
+        "--isolated",
+        "--executable-path",
+        "/home/coder/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome"
+      ],
+      "env": {}
+    }
+  }
+}
